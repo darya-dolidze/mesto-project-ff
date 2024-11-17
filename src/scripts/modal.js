@@ -1,11 +1,11 @@
 function openModal(modal) {
-    modal.classlist.add('popup_is-opened');
+    modal.classList.add('popup_is-opened');
     modal.addEventListener('mousedown', handlCloseByOverlay);
     document.addEventListener('keydown', handlCloseByEscape);
 };
 
 function closeModal(modal) {
-    modal.classlist.remove('popup_is-opened');
+    modal.classList.remove('popup_is-opened');
     modal.removeEventListener('mousedown', handlCloseByOverlay);
     document.removeEventListener('keydown', handlCloseByEscape);
 };

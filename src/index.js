@@ -1,6 +1,6 @@
 import './pages/index.css'; 
 import { initialCards } from '../src/scripts/cards';
-import { createCard } from './scripts/card';
+import { createCard, deleteCard, handlLikeCard } from './scripts/card';
 import { openModal, closeModal } from './scripts/modal';
 
 const cardTemplate = document.querySelector("#card-template");
@@ -27,14 +27,11 @@ const imagePopup = document.querySelector('.popup_type_image');
 const cardImage = imagePopup.querySelector('.popup__image');
 const cardCaption = imagePopup.querySelector('.popup__caption');
 
+
 const popupCloseButton = document.querySelectorAll('.popup__close');
 
 // @todo: Функция удаления карточки
-function deleteCard(evt) {
-    const evtTarget = evt.target;
-    const listItem = evtTarget.closest(".places__item");
-    listItem.remove();
-}
+
 
 function handlOpenImagePopup(link, name) {
     cardImage.src = link;
@@ -60,9 +57,16 @@ function handlNewCardSubmit(evt) {
     cardTemplate,
     newCardData,
     deleteCard,
-    handlOpenImagePopup
+    handlOpenImagePopup,
+    handlLikeCard
     )
+
+    placeList.prepend(newCard);
+    newCardForm.reset();
+    closeModal(newCardPopup);
 }
+
+
 
 // @todo: Вывести карточки на страницу
 initialCards.forEach((element,) => {
@@ -70,14 +74,15 @@ initialCards.forEach((element,) => {
     cardTemplate,
     element,
     deleteCard,
-    handlOpenImagePopup
+    handlOpenImagePopup,
+    handlLikeCard
     );
 
     placeList.append(cardElement);
 })
 
 modals.forEach(modal => {
-    modal.classlist.add('popup_is-animated')
+    modal.classList.add('popup_is-animated')
 });
 
 profileEditButton.addEventListener('click', () => {
@@ -93,8 +98,9 @@ newCardButton.addEventListener('click', () => {
 popupCloseButton.forEach(button => {
     button.addEventListener('click', (evt) => {
         const modal = evt.target.closest('.popup');
-        closeModal(newCardPopup)
+        closeModal(modal)
     });
 })
 
-profileForm.addEventListener('submit', handlProfileSubmit)
+profileForm.addEventListener('submit', handlProfileSubmit);
+newCardForm.addEventListener('submit', handlNewCardSubmit);
