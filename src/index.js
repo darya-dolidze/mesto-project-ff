@@ -28,13 +28,14 @@ const cardImage = imagePopup.querySelector('.popup__image');
 const cardCaption = imagePopup.querySelector('.popup__caption');
 
 
-const popupCloseButton = document.querySelectorAll('.popup__close');
+const popupCloseButtons = document.querySelectorAll('.popup__close');
 
 // @todo: Функция удаления карточки
 
 
 function handlOpenImagePopup(link, name) {
     cardImage.src = link;
+    cardImage.alt = name;
     cardCaption.textContent = name;
     openModal(imagePopup)
 }
@@ -95,7 +96,7 @@ newCardButton.addEventListener('click', () => {
     openModal(newCardPopup)
 });
 
-popupCloseButton.forEach(button => {
+popupCloseButtons.forEach(button => {
     button.addEventListener('click', (evt) => {
         const modal = evt.target.closest('.popup');
         closeModal(modal)
