@@ -4,8 +4,7 @@
   "description": "https://github.com/Igor-Gurskiy/mesto-project-ff.git",
   "main": "index.js",
   "scripts": {
-    "build:prod": "webpack --env mode=production",
-    "build:dev": "webpack --env mode=development",
+    "build": "webpack --mode production",
     "dev": "webpack serve",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
