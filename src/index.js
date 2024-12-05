@@ -2,6 +2,7 @@ import './pages/index.css';
 import { initialCards } from '../src/scripts/cards';
 import { createCard, deleteCard, handlLikeCard } from './scripts/card';
 import { openModal, closeModal } from './scripts/modal';
+import { enableValidation } from './scripts/validation'
 
 const cardTemplate = document.querySelector("#card-template");
 
@@ -105,3 +106,5 @@ popupCloseButtons.forEach(button => {
 
 profileForm.addEventListener('submit', handlProfileSubmit);
 newCardForm.addEventListener('submit', handlNewCardSubmit);
+
+enableValidation();
