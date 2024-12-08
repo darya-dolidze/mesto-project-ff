@@ -6,11 +6,18 @@ const config = {
     },
 };
 
+function getResponseData(res) {
+    if (!res.ok) {
+        return Promise.reject(`Ошибка: ${res.status}`); 
+    }
+    return res.json();
+}
+
 export const getUserInfo = () => {
     return fetch(`${config.baseUrl}/users/me`, {
         headers: config.headers,
     })
-    .then(res => res.json());
+    .then(getResponseData);
 }    
 
 export const updateUserCard = (name, about) => {
@@ -22,7 +29,7 @@ export const updateUserCard = (name, about) => {
             about: about
         })
     })
-    .then(res => res.json());
+    .then(getResponseData);
 }
 
 export const updateUserAvatar = (link) => {
@@ -32,14 +39,14 @@ export const updateUserAvatar = (link) => {
         body: JSON.stringify({
         avatar: link,
     })
-}).then(res => res.json());
+}).then(getResponseData);
 };
 
 export const getInitialCards = () => {
     return fetch(`${config.baseUrl}/cards`, {
         headers: config.headers
     })
-    .then(res => res.json());
+    .then(getResponseData);
 };
 
 export const addNewCards = (name, link) => {
@@ -51,7 +58,7 @@ export const addNewCards = (name, link) => {
             link: link
         })
     })
-    .then(res => res.json());
+    .then(getResponseData);
 };
 
 export const removeCard = (id) => {
@@ -59,7 +66,7 @@ export const removeCard = (id) => {
         method: "DELETE",
         headers: config.headers,
     })
-    .then(res => res.json());
+    .then(getResponseData);
 };
 
 export const likeCard = (id, isLiked) => {

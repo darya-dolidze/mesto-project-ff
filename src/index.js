@@ -60,7 +60,7 @@ function handlOpenImagePopup(link, name) {
 function handlProfileSubmit(evt) {
     evt.preventDefault();
 
-    const button = newAvatarForm.querySelector(".popup__button");
+    const button = profileForm.querySelector(".popup__button");
     button.textContent = "Сохранение...";
 
     updateUserCard(profileNameInput.value, profileDescriptionInput.value).then(userData => {
@@ -80,7 +80,7 @@ function handlProfileSubmit(evt) {
 function handlNewCardSubmit(evt) {
     evt.preventDefault();
 
-    const button = newAvatarForm.querySelector(".popup__button");
+    const button = newCardForm.querySelector(".popup__button");
     button.textContent = "Сохранение...";
 
     addNewCards(newCardNameInput.value, newCardLinkInput.value)
@@ -134,7 +134,8 @@ function handlNewAvatarForm(evt) {
     });
 }
 
-Promise.all([getUserInfo(), getInitialCards()]).then(([userData, cards]) => {
+Promise.all([getUserInfo(), getInitialCards()])
+.then(([userData, cards]) => {
     profileTitle.textContent = userData.name;
     profileDescription.textContent = userData.about;
     profileImage.style.backgroundImage = `url(${userData.avatar})`;
@@ -142,17 +143,21 @@ Promise.all([getUserInfo(), getInitialCards()]).then(([userData, cards]) => {
     myId = userData._id;
 
     cards.forEach((card) => {
-        const cardElement = createCard(
+    const cardElement = createCard(
         cardTemplate,
         myId,
         card,
         deleteCard,
         handlOpenImagePopup,
         handlLikeCard
-        );
-    
-        placeList.append(cardElement);
-    })
+);
+
+    placeList.append(cardElement);
+    });
+})
+.catch((err) => {
+    console.error("Ошибка при выполнении запроса:", err);
+    alert("Возникла ошибка. Пожалуйста, попробуйте снова.");
 });
 
 // @todo: Вывести карточки на страницу
@@ -162,8 +167,8 @@ modals.forEach(modal => {
 });
 
 newAvatarButton.addEventListener("click", () => {
-    clearValidation(newAvatarForm, validationConfig);
     newAvatarForm.reset();
+    clearValidation(newAvatarForm, validationConfig);
     openModal(newAvatar);
 });
 
